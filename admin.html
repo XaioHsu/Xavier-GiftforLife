@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>相片管理後台</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .admin-form input, .admin-form select, .admin-form button {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--divider-color);
+            background: rgba(255,255,255,0.05);
+            color: var(--primary-text);
+        }
+        .admin-form button {
+            cursor: pointer;
+            background: var(--gold-accent);
+            color: #000;
+            font-weight: bold;
+            border: none;
+        }
+        #status-msg {
+            margin: 15px 0;
+            color: var(--gold-accent);
+        }
+        /* 管理相片清單樣式 */
+        .photo-manage-list {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+        }
+        .photo-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--divider-color);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+        .photo-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .photo-item p {
+            margin: 8px 0;
+            font-size: 0.85rem;
+            color: var(--secondary-text);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .btn-delete {
+            background-color: #ff4d4f;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .btn-delete:hover {
+            background-color: #d9363e;
+        }
+    </style>
+</head>
+<body>
+    <main class="content-wrapper">
+        <h2 class="section-title">上傳新相片 (支援多選)</h2>
+        <form id="uploadForm" class="admin-form" enctype="multipart/form-data">
+            <label>選擇分類：</label>
+            <select name="category" id="category">
+                <option value="moments">Moments (精彩瞬間)</option>
+                <option value="cooking">Cooking Life (烹飪)</option>
+            </select>
+
+            <label>相片描述 / 標題：</label>
+            <input type="text" name="caption" placeholder="例：日落時分的金色海岸 (多張時將共用此標題)" required>
+
+            <label>選擇照片檔案 (可按住 Ctrl 或 Shift 複選)：</label>
+            <input type="file" name="images" accept="image/*" multiple required>
+
+            <button type="submit">立即批次上傳</button>
+        </form>
+
+        <p id="status-msg"></p>
+        <p><a class="frosted-btn-soft" href="moments.html">查看 Moments 頁面</a></p>
+
+        <h2 class="section-title" style="margin-top: 50px;">現有相片管理 (點擊刪除)</h2>
+        <div class="photo-manage-list" id="photoList">
+            <p style="color: var(--secondary-text);">載入中...</p>
+        </div>
+    </main>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        const statusMsg = document.getElementById('status-msg');
+        const photoList = document.getElementById('photoList');
+
+        // 載入所有相片以供管理
+        async function fetchPhotos() {
+            try {
+                const res = await fetch('/api/photos');
+                const photos = await res.json();
+
+                if (photos.length === 0) {
+                    photoList.innerHTML = '<p style="color: var(--secondary-text);">目前沒有任何相片。</p>';
+                    return;
+                }
+
+                photoList.innerHTML = photos.map(photo => `
+                    <div class="photo-item">
+                        <img src="${photo.image_url}" alt="${photo.caption}">
+                        <p title="${photo.caption}">[${photo.category}] ${photo.caption || '無描述'}</p>
+                        <button class="btn-delete" onclick="deletePhoto(${photo.id})">刪除</button>
+                    </div>
+                `).join('');
+            } catch (err) {
+                photoList.innerHTML = '<p style="color: red;">載入相片失敗。</p>';
+            }
+        }
+
+        // 上傳表單事件
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            statusMsg.textContent = '上傳中...';
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    statusMsg.textContent = '✅ ' + result.message;
+                    form.reset();
+                    fetchPhotos(); // 重新整理管理清單
+                } else {
+                    statusMsg.textContent = '❌ 上傳失敗：' + (result.error || '未知錯誤');
+                }
+            } catch (err) {
+                statusMsg.textContent = '❌ 連線錯誤，請確認 node server.js 是否有開啟。';
+            }
+        });
+
+        // 刪除照片
+        async function deletePhoto(id) {
+            if (!confirm('確定要刪除這張照片嗎？（資料庫與檔案將會一併移除）')) return;
+
+            try {
+                const res = await fetch(`/api/photos/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    fetchPhotos(); // 重新載入列表
+                } else {
+                    alert('刪除失敗！');
+                }
+            } catch (err) {
+                alert('網路錯誤，無法完成刪除。');
+            }
+        }
+
+        // 頁面開啟時自動加載相片
+        fetchPhotos();
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miao & Xiao's Moments</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href=" style.css">
+</head>
+
+<body id="page-moments">
+
+    <header class="site-header">
+        <h1>Moments Captured</h1>
+        <hr class="header-divider">
+        <nav class="main-nav">
+            <ul>
+                <li><a class="nav-frosted" href="cooking-life.html">Cooking Life</a></li>
+                <li><a class="nav-frosted" href="moments.html">Moments</a></li>
+                <li><a class="nav-frosted" href="happy-everyday.html">Happy Everyday</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content-wrapper">
+
+        <h2 class="section-title">海岸公路之旅 (Coastal Road Trip)</h2>
+
+        <!-- 清空原本寫死的卡片，交由 JS 動態生成 -->
+        <section class="gallery-grid" id="gallery-container">
+            <p style="color: var(--secondary-text);">載入相片中...</p>
+        </section>
+
+        <aside class="quote-section">
+            <blockquote>"The best view comes after the hardest climb."</blockquote>
+        </aside>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 Miao and Xiao. All rights reserved.</p>
+    </footer>
+
+    <!-- 加入這段 JS 程式碼 -->
+    <script>
+        async function loadPhotos() {
+            const container = document.getElementById('gallery-container');
+            try {
+                const res = await fetch('/api/photos?category=moments');
+                const photos = await res.json();
+
+                if (photos.length === 0) {
+                    container.innerHTML = '<p style="color: var(--secondary-text);">目前尚無照片，請先至後台上傳。</p>';
+                    return;
+                }
+
+                // 動態將資料庫的照片渲染到畫面上
+                container.innerHTML = photos.map(photo => `
+                    <div class="photo-card">
+                        <img src="${photo.image_url}" alt="${photo.caption}">
+                        <div class="photo-caption">${photo.caption}</div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error(err);
+                container.innerHTML = '<p style="color: red;">無法取得相片，請確認伺服器運作中。</p>';
+            }
+        }
+
+        loadPhotos();
+    </script>
+</body>
+</html>

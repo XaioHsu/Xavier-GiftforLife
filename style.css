@@ -1,0 +1,656 @@
+:root {
+    /* =================================================== */
+    /* 🎨 全局變數 / 配色盤 */
+    /* =================================================== */
+    /* --- 基礎顏色 --- */
+    --background-dark: #1A1A1A;
+    /* 基礎背景：接近黑色的深灰 */
+    --surface-dark: #2C2C2C;
+    /* 內容區塊表面：深灰色，形成柔和的層次 */
+    /* --- 文字顏色 --- */
+    --primary-text: #EBEBEB;
+    /* 主要文字顏色：幾乎白色，高對比 */
+    --secondary-text: #AAAAAA;
+    /* 次要文字/內文：中等灰色，柔化細節 */
+    /* --- 主題強調色 --- */
+    --gold-accent: #B8860B;
+    /* 土金色 (DarkGoldenrod)，奢華感 */
+    --violet-accent: #8A2BE2;
+    /* 紫羅蘭色 (BlueViolet)，強烈點綴色 */
+    /* --- 邊界與陰影 --- */
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --divider-color: #444444;
+    /* 柔和的分隔線 */
+    /* --- 字體定義 --- */
+    --handwriting-font: 'Dancing Script', cursive;
+    /* 花體字 (金色標題) */
+    --serif-font: 'Playfair Display', serif;
+    /* 襯線標題字 */
+    --sans-font: 'Arial', sans-serif;
+    /* 內文清晰字 */
+}
+
+
+/* =================================================== */
+
+
+/* 1. 基礎排版與背景 (沉穩格調) */
+
+
+/* =================================================== */
+
+body {
+    background-color: #000000;
+    /* 使用純黑，提供最大對比 */
+    color: var(--primary-text);
+    line-height: 1.7;
+    font-family: var(--sans-font);
+    margin: 0;
+    padding: 0;
+}
+
+.content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    /* 內容區塊半透明，利於毛玻璃效果 */
+    background-color: rgba(44, 44, 44, 0.85);
+    box-shadow: 0 4px 20px var(--shadow-color);
+}
+
+hr.header-divider {
+    border: 0;
+    height: 1px;
+    /* 金色漸變分隔線 */
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), var(--gold-accent), rgba(0, 0, 0, 0));
+    margin: 20px auto;
+    width: 60%;
+}
+
+
+/* =================================================== */
+
+
+/* 2. 標題與導覽列 */
+
+.quote-section blockquote {
+    /* ... (原來的樣式) ... */
+    margin: 50px auto;
+}
+
+
+/* ------------------- 通用輔助類別 (Utility Classes) ------------------- */
+
+.gold-text-accent {
+    color: var(--gold-accent);
+    font-weight: bold;
+}
+
+
+/* =================================================== */
+
+.site-header {
+    /* 讓 header 也具備透明度以利毛玻璃效果 */
+    background-color: rgba(44, 44, 44, 0.85);
+    padding-top: 20px;
+}
+
+h1 {
+    font-family: var(--handwriting-font);
+    font-size: 4.5em;
+    text-align: center;
+    color: var(--gold-accent);
+    text-shadow: 0 0 10px rgba(184, 134, 11, 0.5);
+    margin-bottom: 10px;
+}
+
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 40px;
+}
+
+.main-nav ul li {
+    margin: 0 15px;
+}
+
+
+/* ------------------- Slogan 與區塊標題 ------------------- */
+
+.slogan {
+    font-family: var(--handwriting-font);
+    color: var(--gold-accent);
+    font-size: 3em;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.description-text {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 50px;
+    font-family: var(--serif-font);
+    font-style: italic;
+    color: var(--secondary-text);
+}
+
+.section-title {
+    font-family: var(--serif-font);
+    color: var(--violet-accent);
+    font-size: 2.2em;
+    border-bottom: 2px solid var(--divider-color);
+    padding-bottom: 5px;
+    margin-top: 40px;
+}
+
+.quote-section blockquote {
+    font-family: var(--serif-font);
+    font-size: 1.8em;
+    font-style: italic;
+    text-align: center;
+    padding: 30px;
+    border-top: 1px dashed var(--divider-color);
+    border-bottom: 1px dashed var(--divider-color);
+    color: var(--secondary-text);
+    margin: 50px auto;
+}
+
+
+/* =================================================== */
+
+
+/* 3. 通用毛玻璃卡片 (主頁文章卡片) */
+
+
+/* =================================================== */
+
+.post-card {
+    border: 1px solid rgba(138, 43, 226, 0.2);
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    /* 關鍵 1: 半透明背景 */
+    background-color: rgba(44, 44, 44, 0.5);
+    /* 關鍵 2: 毛玻璃模糊效果 */
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s, background-color 0.3s;
+}
+
+.post-card:hover {
+    box-shadow: 0 5px 15px rgba(138, 43, 226, 0.6);
+    background-color: rgba(44, 44, 44, 0.7);
+}
+
+.post-card h3 {
+    font-family: var(--serif-font);
+    color: var(--gold-accent);
+}
+
+
+/* =================================================== */
+
+
+/* 4. 毛玻璃按鈕核心樣式 (Frosted Glass Buttons) */
+
+
+/* 此區塊保持原始獨立定義，確保樣式不被更改。 */
+
+
+/* =================================================== */
+
+
+/* --- 4.1 基礎毛玻璃按鈕 (.frosted-btn) --- */
+
+.frosted-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 12px;
+    color: var(--primary-text);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    -webkit-backdrop-filter: blur(6px) saturate(120%);
+    backdrop-filter: blur(6px) saturate(120%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+    /* 簡化 transition 語句的可讀性 */
+    transition: all 520ms cubic-bezier(.22, .9, .3, 1);
+    cursor: pointer;
+    text-decoration: none;
+    font-family: var(--sans-font);
+    font-size: 0.95rem;
+    line-height: 1;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.frosted-btn:hover,
+.frosted-btn:focus {
+    background: rgba(255, 255, 255, 0.12);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    backdrop-filter: blur(12px) saturate(140%);
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 18px 40px rgba(184, 134, 11, 0.20), 0 2px 0 rgba(255, 255, 255, 0.02) inset;
+    color: var(--gold-accent);
+    border-color: rgba(184, 134, 11, 0.45);
+    outline: none;
+}
+
+.frosted-btn:active {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 8px 22px rgba(184, 134, 11, 0.14) inset;
+}
+
+.frosted-btn::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: -120%;
+    width: 60%;
+    height: 180%;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0) 0%, rgba(184, 134, 11, 0.30) 50%, rgba(255, 255, 255, 0) 100%);
+    transform: translateX(0) rotate(12deg);
+    transition: transform 900ms cubic-bezier(.22, .9, .3, 1), opacity 420ms ease;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(6px);
+}
+
+.frosted-btn:hover::after,
+.frosted-btn:focus::after {
+    transform: translateX(260%) rotate(12deg);
+    opacity: 0.12;
+}
+
+.frosted-btn:focus-visible {
+    box-shadow: 0 18px 40px rgba(184, 134, 11, 0.22), 0 0 0 3px rgba(184, 134, 11, 0.08);
+}
+
+
+/* --- 4.2 文章卡片使用的柔和按鈕 (.frosted-btn-soft) --- */
+
+.frosted-btn-soft {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 12px;
+    color: var(--primary-text);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    -webkit-backdrop-filter: blur(6px) saturate(110%);
+    backdrop-filter: blur(6px) saturate(110%);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45);
+    /* 簡化 transition 語句的可讀性 */
+    transition: all 420ms cubic-bezier(.22, .9, .3, 1);
+    cursor: pointer;
+    text-decoration: none;
+    font-family: var(--sans-font);
+    font-size: 0.95rem;
+    line-height: 1;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.frosted-btn-soft:hover,
+.frosted-btn-soft:focus {
+    background: rgba(255, 255, 255, 0.14);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    backdrop-filter: blur(12px) saturate(120%);
+    transform: translateY(-8px) scale(1.06);
+    box-shadow: 0 22px 48px rgba(184, 134, 11, 0.14), 0 2px 0 rgba(255, 255, 255, 0.02) inset;
+    color: rgba(220, 190, 115, 1);
+    border-color: rgba(184, 134, 11, 0.30);
+}
+
+.frosted-btn-soft:active {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 26px rgba(184, 134, 11, 0.12) inset;
+}
+
+.frosted-btn-soft::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: -120%;
+    width: 60%;
+    height: 180%;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0) 0%, rgba(210, 180, 110, 0.42) 50%, rgba(255, 255, 255, 0) 100%);
+    transform: translateX(0) rotate(12deg);
+    transition: transform 820ms cubic-bezier(.22, .9, .3, 1), opacity 320ms ease;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(6px);
+}
+
+.frosted-btn-soft:hover::after,
+.frosted-btn-soft:focus::after {
+    transform: translateX(260%) rotate(12deg);
+    opacity: 0.18;
+}
+
+
+/* --- 4.3 導覽列使用的毛玻璃按鈕 (.nav-frosted) --- */
+
+.nav-frosted {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 18px;
+    color: var(--primary-text);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    -webkit-backdrop-filter: blur(6px) saturate(110%);
+    backdrop-filter: blur(6px) saturate(110%);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.36);
+    /* 簡化 transition 語句的可讀性 */
+    transition: all 420ms cubic-bezier(.22, .9, .3, 1);
+    text-decoration: none;
+    font-family: var(--serif-font);
+    font-size: 1.02em;
+    line-height: 1;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    font-weight: 600;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.03);
+}
+
+.nav-frosted:hover,
+.nav-frosted:focus {
+    background: rgba(255, 255, 255, 0.10);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    backdrop-filter: blur(10px) saturate(120%);
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 14px 28px rgba(184, 134, 11, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    color: rgba(220, 190, 115, 1);
+    border-color: rgba(184, 134, 11, 0.18);
+}
+
+.nav-frosted:active {
+    transform: translateY(-2px) scale(1.00);
+    box-shadow: 0 6px 14px rgba(184, 134, 11, 0.10) inset;
+}
+
+.nav-frosted::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: -110%;
+    width: 55%;
+    height: 160%;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0) 0%, rgba(210, 180, 110, 0.36) 50%, rgba(255, 255, 255, 0) 100%);
+    transform: translateX(0) rotate(10deg);
+    transition: transform 760ms cubic-bezier(.22, .9, .3, 1), opacity 320ms ease;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(5px);
+}
+
+.nav-frosted:hover::after,
+.nav-frosted:focus::after {
+    transform: translateX(220%) rotate(10deg);
+    opacity: 0.12;
+}
+
+
+/* --- 4.4 無 backdrop-filter 支援之瀏覽器備援 --- */
+
+
+/* (保持不變，用於向下相容性) */
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .frosted-btn,
+    .frosted-btn-soft,
+    .nav-frosted {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+    .frosted-btn:hover,
+    .frosted-btn:focus,
+    .frosted-btn-soft:hover,
+    .frosted-btn-soft:focus,
+    .nav-frosted:hover,
+    .nav-frosted:focus {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.12));
+        box-shadow: 0 10px 40px rgba(138, 43, 226, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+}
+
+
+/* =================================================== */
+
+
+/* 5. 子頁面專屬 CSS 樣式 (依據 body ID 區分) */
+
+
+/* =================================================== */
+
+
+/* ---------------------------------------------------- */
+
+
+/* 5.1 🥘 Cooking Life (烹飪生活) */
+
+
+/* ---------------------------------------------------- */
+
+#page-cooking .recipe-grid {
+    display: grid;
+    /* 雙欄：左側內容 (70%)，右側圖片/插圖 (30%) */
+    grid-template-columns: 70% 30%;
+    gap: 40px;
+    margin-top: 50px;
+    padding-right: 20px;
+}
+
+#page-cooking .recipe-steps ol {
+    list-style: none;
+    padding: 0;
+}
+
+#page-cooking .recipe-steps li {
+    margin-bottom: 35px;
+    /* 金色垂直強調線 */
+    border-left: 4px solid var(--gold-accent);
+    padding-left: 20px;
+    transition: background-color 0.3s;
+}
+
+#page-cooking .recipe-steps li:hover {
+    /* 懸停時，讓卡片微微發光，增加細節感 */
+    background-color: rgba(184, 134, 11, 0.05);
+}
+
+#page-cooking .recipe-steps li h4 {
+    /* 食譜步驟標題使用紫羅蘭色，保持可讀性 */
+    color: var(--violet-accent);
+    font-family: var(--serif-font);
+    font-size: 1.3em;
+}
+
+
+/* 右側圖片容器 */
+
+#page-cooking .recipe-image-placeholder img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    /* 圖片動畫：輕微的縮放效果 */
+    transition: transform 0.5s;
+}
+
+#page-cooking .recipe-image-placeholder img:hover {
+    transform: scale(1.03);
+}
+
+
+/* ---------------------------------------------------- */
+
+
+/* 5.2 ✨ Moments (精彩瞬間) */
+
+
+/* ---------------------------------------------------- */
+
+#page-moments .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 創建 3 個等寬的欄位 */
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.photo-card {
+    background-color: var(--surface-dark);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    /* 啟用 3D 變換 */
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+}
+
+
+/* 動畫：3D 輕微旋轉 */
+
+.photo-card:hover {
+    /* 卡片在懸停時沿著 Y 軸輕微旋轉，模擬觀看藝術品 */
+    transform: rotateY(5deg) scale(1.02);
+    box-shadow: 0 8px 20px rgba(138, 43, 226, 0.5);
+    /* 紫羅蘭色強烈陰影 */
+    z-index: 10;
+}
+
+.photo-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+/* 圖片標題/浮水印 */
+
+.photo-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /* 使用紫羅蘭色半透明背景 */
+    background-color: rgba(138, 43, 226, 0.7);
+    color: var(--primary-text);
+    padding: 10px;
+    font-size: 0.9em;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.photo-card:hover .photo-caption {
+    /* 懸停時，標題淡入 */
+    opacity: 1;
+}
+
+
+/* ---------------------------------------------------- */
+
+
+/* 5.3 🏡 Happy Everyday (快樂日常) */
+
+
+/* ---------------------------------------------------- */
+
+
+/* 外部容器：確保時間軸置中 */
+
+#page-happy .timeline-container {
+    max-width: 700px;
+    margin: 40px auto;
+    position: relative;
+    /* 主時間軸線 (紫羅蘭色) */
+    border-left: 2px solid var(--violet-accent);
+    padding-left: 20px;
+}
+
+.timeline-entry {
+    margin-bottom: 40px;
+    position: relative;
+}
+
+
+/* 條目懸停時，標題的視覺反饋 (可選) */
+
+.timeline-entry:hover .entry-title {
+    color: var(--violet-accent);
+    /* 懸停時，標題顏色變紫 */
+    text-shadow: 0 0 8px rgba(138, 43, 226, 0.4);
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+
+/* 時間軸上的小圓點 */
+
+.timeline-entry::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: -24px;
+    /* 放在時間軸線上 */
+    width: 10px;
+    height: 10px;
+    background-color: var(--gold-accent);
+    /* 金色圓點 */
+    border: 3px solid var(--background-dark);
+    /* 外圈使用背景色，使其突顯 */
+    border-radius: 50%;
+}
+
+.entry-date {
+    color: var(--secondary-text);
+    /* 日期使用柔和的灰色 */
+    font-size: 0.85em;
+    margin-bottom: 5px;
+}
+
+.entry-title {
+    color: var(--gold-accent);
+    /* 條目標題使用金色 */
+    font-family: var(--serif-font);
+    font-size: 1.5em;
+    margin-top: 0;
+    cursor: pointer;
+    /* 提示可點擊/互動 */
+}
+
+
+/* 垂直展開的動畫內容 (預設收合) */
+
+.entry-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.7s ease-in-out;
+    color: var(--secondary-text);
+}
+
+
+/* !!! 修正邏輯：滑鼠懸停在整個條目上時，內容展開 (純 CSS 實現) !!! */
+
+.timeline-entry:hover .entry-content {
+    /* 設置一個足夠大的值來展開內容 */
+    max-height: 500px;
+}
+
+
+/* 刪除原來的 JS 邏輯樣式，因為不再需要 */
+
+
+/* .entry-content.is-open {
+    max-height: 500px;
+} */

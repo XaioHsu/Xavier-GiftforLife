@@ -13,6 +13,24 @@ app.use(cors());
 app.use(express.json());
 
 // 1. 正確綁定當前目錄為靜態資源目錄
+// === 插入這段（自動檢查並建立 uploads 資料夾） ===
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+// ============================================
+
+app.use(cors());
+app.use(express.json());
+
+// 1. 正確綁定當前目錄為靜態資源目錄（保持原樣）
+app.use(express.static(path.join(__dirname)));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// 2. 新增根目錄預設導向 index.html（保持原樣）
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 app.use(express.static(path.join(__dirname)));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

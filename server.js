@@ -6,12 +6,22 @@ const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
 
 const app = express();
+// 重要：Render 會透過 process.env.PORT 指派連接埠
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname));
+
+// 1. 正確綁定當前目錄為靜態資源目錄
+app.use(express.static(path.join(__dirname)));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// 2. 新增根目錄預設導向 index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// --- 後續的 SQLite、Multer、API 路由保持不變 ---
 
 // 1. 初始化資料庫
 const db = new sqlite3.Database('./gallery.db', (err) => {
